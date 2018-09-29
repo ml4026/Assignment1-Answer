@@ -8,7 +8,7 @@ def policy_iteration(env, gamma, max_iteration, theta):
     Inputs:
     env: OpenAI Gym environment.
             env.P: dictionary
-                    P[state][action] is tuples with (probability, nextstate, reward, terminal)
+                    P[state][action] is list of tuples. Each tuple contains probability, nextstate, reward, terminal
                     probability: float
                     nextstate: int
                     reward: float

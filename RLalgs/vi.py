@@ -5,12 +5,11 @@ def value_iteration(env, gamma, max_iteration, theta):
     """
     Implement value iteration algorithm. 
 
-    Parameters
-    ----------
-    env: OpenAI env.
+    Inputs:
+    env: OpenAI Gym environment.
             env.P: dictionary
                     the transition probabilities of the environment
-                    P[state][action] are lists of tuples. Each tuple contains probability, nextstate, reward, terminal
+                    P[state][action] is list of tuples. Each tuple contains probability, nextstate, reward, terminal
             env.nS: int
                     number of states
             env.nA: int
@@ -26,6 +25,7 @@ def value_iteration(env, gamma, max_iteration, theta):
     V: numpy.ndarray
     policy: numpy.ndarray
     numIterations: int
+            Number of iterations
     """
 
     V = np.zeros(env.nS)
@@ -66,7 +66,8 @@ def value_iteration(env, gamma, max_iteration, theta):
 
 def extract_policy(env, v, gamma):
 
-    """ Extract the optimal policy given the optimal value-function
+    """ 
+    Extract the optimal policy given the optimal value-function
 
     Inputs:
     env: OpenAI Gym environment.

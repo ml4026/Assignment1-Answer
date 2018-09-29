@@ -1,5 +1,5 @@
 import numpy as np  
-    
+
 def epsilon_greedy(value, e, seed = None):
     '''
     Implement Epsilon-Greedy policy

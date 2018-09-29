@@ -1,49 +1,34 @@
 import numpy as np
+from RLalgs.policy_utils import epsilon_greedy
+import random
 
 def QLearning(env, num_episodes, gamma, lr, e):
     """
     Implement the Q-learning algorithm following the epsilon-greedy exploration. Update Q at the end of every episode.
 
     Inputs:
-    env: gym.core.Environment
-      Environment to compute Q function
-    num_episodes: int
-      Number of episodes of training.
-    gamma: float
-      Discount factor.
-    learning_rate: float
-      Learning rate.
-    e: float
-      Epsilon value used in the epsilon-greedy method.
+    
 
-
-    Returns
-    -------
-    np.array
-      An array of shape [env.nS x env.nA] representing state, action values
+    Outputs:
+    Q: numpy.ndarray
     """
 
-    ############################
-    #         YOUR CODE        #
-
     Q = np.zeros((env.nS, env.nA))
-    r_list = np.zeros(num_episodes)
-    step_list = np.zeros(num_episodes)
+    
+    ############################
+    # YOUR CODE STARTS HERE
     for i in range(num_episodes):
-        s1 = 0
-        a1 = 0
-        while not env.P[s1][a1][0][3]:
-            a1 = ep_greedy(s1, Q, env.nA, e)
-            s2 = env.P[s1][a1][0][1]
-            t_q = max(Q[s1])
-            Q[s1][a1] += lr * (env.P[s1][a1][0][2] + gamma * t_q - Q[s1][a1])
-            s1 = s2
-            r_list[i] += env.P[s1][a1][0][2]
-            step_list[i] += 1
+        s1 = random.choice(range(env.nS))
+        terminal = False
         
-        if i != 0:
-            r_list[i] = r_list[i - 1] + (r_list[i] - r_list[i - 1]) / (i + 1)
-
+        while not terminal:
+            a1 = epsilon_greedy(Q[s1], e)
+            models = env.P[s1][a1]            
+            model = random.choice(models)
+            prob, s2, reward, terminal = model
+            Q[s1][a1] += lr * (reward + gamma * np.amax(Q[s2]) - Q[s1][a1])
+            s1 = s2
+    # YOUR CODE ENDS HERE
     ############################
 
     return Q
