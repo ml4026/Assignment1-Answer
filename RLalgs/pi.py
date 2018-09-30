@@ -1,5 +1,4 @@
 import numpy as np
-#np.set_printoptions(precision = 3)
 
 def policy_iteration(env, gamma, max_iteration, theta):
     """
@@ -35,7 +34,7 @@ def policy_iteration(env, gamma, max_iteration, theta):
     policy_stable = False
     numIterations = 0
     
-    while not policy_stable:
+    while not policy_stable and numIterations < max_iteration:
         #Implement it with function policy_evaluation and policy_improvement
         ############################
         # YOUR CODE STARTS HERE
@@ -77,7 +76,8 @@ def policy_evaluation(env, policy, gamma, max_iteration, theta):
     ############################
     # YOUR CODE STARTS HERE
     V = np.zeros(env.nS)
-    for i in range(max_iteration):
+    delta = float('inf')
+    while delta >= theta:
         delta = 0
         for s in range(env.nS):
             temp = V[s]
@@ -88,9 +88,6 @@ def policy_evaluation(env, policy, gamma, max_iteration, theta):
                 V[s] += prob * (reward + gamma * V[next_state])
                 
             delta = max(delta, abs(temp - V[s]))
-
-        if delta < theta:
-            break
     # YOUR CODE ENDS HERE
     ############################
 

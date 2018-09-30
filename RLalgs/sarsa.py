@@ -1,5 +1,5 @@
 import numpy as np
-from RLalgs.policy_utils import epsilon_greedy
+from RLalgs.utils import epsilon_greedy
 import random
 
 def SARSA(env, num_episodes, gamma, lr, e):
