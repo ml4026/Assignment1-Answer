@@ -39,7 +39,7 @@ def policy_iteration(env, gamma, max_iteration, theta):
         #Implement it with function policy_evaluation and policy_improvement
         ############################
         # YOUR CODE STARTS HERE
-        V = policy_evaluation(env, policy, gamma, max_iteration, theta)
+        V = policy_evaluation(env, policy, gamma, theta)
         policy, policy_stable = policy_improvement(env, V, policy, gamma)
         # YOUR CODE ENDS HERE
         ############################
@@ -48,7 +48,7 @@ def policy_iteration(env, gamma, max_iteration, theta):
     return V, policy, numIterations
 
 
-def policy_evaluation(env, policy, gamma, max_iteration, theta):
+def policy_evaluation(env, policy, gamma, theta):
     """
     Evaluate the value function from a given policy.
 
@@ -65,10 +65,8 @@ def policy_evaluation(env, policy, gamma, max_iteration, theta):
             Discount factor.
     policy: numpy.ndarray
             The policy to evaluate. Maps states to actions.
-    max_iteration: int
-            The maximum number of iterations to run before stopping.
     theta: float
-            Determines when value function has converged.
+            The threshold of convergence.
     
     Outputs:
     V: numpy.ndarray
