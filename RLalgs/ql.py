@@ -37,17 +37,16 @@ def QLearning(env, num_episodes, gamma, lr, e):
     #      Choose the first state of each episode randomly for exploration.
     ############################
     # YOUR CODE STARTS HERE
+    env.isd = np.ones(env.nS) / env.nS
     for i in range(num_episodes):
-        s1 = random.choice(range(env.nS))
+        state = env.reset()
         terminal = False
         
         while not terminal:
-            a1 = epsilon_greedy(Q[s1], e)
-            models = env.P[s1][a1]            
-            model = random.choice(models)
-            prob, s2, reward, terminal = model
-            Q[s1][a1] += lr * (reward + gamma * np.amax(Q[s2]) - Q[s1][a1])
-            s1 = s2
+            action = epsilon_greedy(Q[state], e)
+            next_state, reward, terminal, prob = env.step(action)
+            Q[state][action] += lr * (reward + gamma * np.amax(Q[next_state]) - Q[state][action])
+            state = next_state
     # YOUR CODE ENDS HERE
     ############################
 

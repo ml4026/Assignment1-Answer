@@ -75,17 +75,18 @@ def policy_evaluation(env, policy, gamma, theta):
     ############################
     # YOUR CODE STARTS HERE
     V = np.zeros(env.nS)
-    delta = float('inf')
+    delta = theta
     while delta >= theta:
         delta = 0
         for s in range(env.nS):
             temp = V[s]
-            V[s] = 0
+            t_V = 0
             models = env.P[s][policy[s]]
             for model in models:
                 prob, next_state, reward, terminal = model
-                V[s] += prob * (reward + gamma * V[next_state])
-                
+                t_V += prob * (reward + gamma * V[next_state])
+            
+            V[s] = t_V
             delta = max(delta, abs(temp - V[s]))
     # YOUR CODE ENDS HERE
     ############################
@@ -130,20 +131,14 @@ def policy_improvement(env, value_from_policy, policy, gamma):
     policy_stable = True
     for s in range(env.nS):
         temp = policy[s]
-        max_v = -float('inf')
-        argmaxa = 0
+        q = np.zeros(env.nA)
         for a in range(env.nA):
             models = env.P[s][a]
-            t_v = 0
             for model in models:
                 prob, next_state, reward, terminal = model
-                t_v += prob * (reward + gamma * value_from_policy[next_state])
-                
-            if t_v > max_v:
-                max_v = t_v
-                argmaxa = a
+                q[a] += prob * (reward + gamma * value_from_policy[next_state])
 
-        policy[s] = argmaxa
+        policy[s] = np.argmax(q)
         if temp != policy[s]:
             policy_stable = False
     # YOUR CODE ENDS HERE
