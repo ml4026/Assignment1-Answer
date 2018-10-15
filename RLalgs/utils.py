@@ -2,12 +2,14 @@ import numpy as np
 from time import sleep
 
 def estimate(OldEstimate, StepSize, Target):
+    'An incremental implementation of average.'
+    
     NewEstimate = OldEstimate + StepSize * (Target - OldEstimate)
     return NewEstimate
 
 def epsilon_greedy(value, e, seed = None):
     '''
-    Implement Epsilon-Greedy policy
+    Implement Epsilon-Greedy policy.
     
     Inputs:
     value: numpy ndarray
@@ -40,6 +42,7 @@ def epsilon_greedy(value, e, seed = None):
 
 def action_evaluation(env, gamma, v):
     '''
+    Convert V value to Q value with model.
     
     Inputs:
     env: OpenAI Gym environment
@@ -126,7 +129,7 @@ def render(env, policy):
     
 def human_play(env):
     '''
-    Play games
+    Play the game.
     
     Inputs:
     env: OpenAI Gym environment
@@ -142,7 +145,7 @@ def human_play(env):
                     number of actions
     '''
     
-    print('Action indices: LEFT=0, DOWN = 1, RIGHT = 2, UP = 3')
+    print('Action indices: LEFT = 0, DOWN = 1, RIGHT = 2, UP = 3')
     state = env.reset()
     env.render()
     terminal = False
